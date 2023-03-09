@@ -19,7 +19,7 @@ function Showtimes({showtimes}){
         <ButtonsContainer>
             {showtimes.map( (showtime) => (
                 <Link to={`/assentos/${showtime.id}`} key={showtime.id} >
-                    <button data-test={showtime}>{showtime.name}</button>
+                    <button data-test="showtime">{showtime.name}</button>
                 </Link>
             ) )}
         </ButtonsContainer>

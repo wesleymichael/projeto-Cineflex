@@ -28,7 +28,7 @@ function Seat({seat}){
         }
     }
     return(
-        <SeatItem onClick={ () => selectSeat(seat.isAvailable)} selected={selected} isAvailable={seat.isAvailable} data-test={seat}>
+        <SeatItem onClick={ () => selectSeat(seat.isAvailable)} selected={selected} isAvailable={seat.isAvailable} data-test="seat">
             {seat.name}
         </SeatItem>
     )
