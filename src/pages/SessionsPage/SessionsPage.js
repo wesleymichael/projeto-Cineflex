@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import Footer from "../../components/Footer"
-import Sessions from "../../components/Sessions"
+import Sessions from "./Sessions"
 
 export default function SessionsPage() {
     const [sessions, setSessions] = useState([])
@@ -23,7 +23,7 @@ export default function SessionsPage() {
             <PageContainer>Loading...</PageContainer>
         )
     }
-    
+
     return (
         <PageContainer>
             Selecione o horário

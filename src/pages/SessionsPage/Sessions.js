@@ -5,7 +5,7 @@ export default function Sessions( {sessionsDays} ){
     return(
         <div>
             {sessionsDays.map( (days) => (
-                <SessionContainer key={days.id}>
+                <SessionContainer key={days.id} data-test="movie-day">
                     {days.weekday} - {days.date}
                     <Showtimes showtimes={days.showtimes} />
                 </SessionContainer>
@@ -19,7 +19,7 @@ function Showtimes({showtimes}){
         <ButtonsContainer>
             {showtimes.map( (showtime) => (
                 <Link to={`/assentos/${showtime.id}`} key={showtime.id} >
-                    <button>{showtime.name}</button>
+                    <button data-test={showtime}>{showtime.name}</button>
                 </Link>
             ) )}
         </ButtonsContainer>

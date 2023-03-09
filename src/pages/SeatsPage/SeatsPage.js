@@ -1,34 +1,33 @@
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Footer from "../../components/Footer"
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { SELECTED, SELECTED_BORDER, AVAILABLE, AVAILABLE_BORDER, UNAVAILABLE, UNAVAILABLE_BORDER } from "../../constants/colors"
+import Seats from "./Seats";
 
 export default function SeatsPage() {
+    const [session, setSession] = useState([]);
+    const { idSessao } = useParams()
+
+    useEffect( ()=> {
+        const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`;
+        const promise = axios.get(url);
+
+        promise.then( (sucess) => setSession(sucess.data) )
+        promise.catch( (err) => console.log(err.response.data) )
+    }, [])
+
+    if( session.length === 0){
+        return <PageContainer>Loading...</PageContainer>
+    }
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
+            <Seats seats={session.seats} />
 
-            <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
-            </SeatsContainer>
-
-            <CaptionContainer>
-                <CaptionItem>
-                    <CaptionCircle />
-                    Selecionado
-                </CaptionItem>
-                <CaptionItem>
-                    <CaptionCircle />
-                    Disponível
-                </CaptionItem>
-                <CaptionItem>
-                    <CaptionCircle />
-                    Indisponível
-                </CaptionItem>
-            </CaptionContainer>
+            <Caption />
 
             <FormContainer>
                 Nome do Comprador:
@@ -46,6 +45,26 @@ export default function SeatsPage() {
     )
 }
 
+function Caption(){
+    return(
+        <CaptionContainer>
+            <CaptionItem>
+                <CaptionCircle border={SELECTED_BORDER} color={SELECTED} />
+                Selecionado
+            </CaptionItem>
+            <CaptionItem>
+                <CaptionCircle border={AVAILABLE_BORDER} color={AVAILABLE} />
+                Disponível
+            </CaptionItem>
+            <CaptionItem>
+                <CaptionCircle border={UNAVAILABLE_BORDER} color={UNAVAILABLE} />
+                Indisponível
+            </CaptionItem>
+        </CaptionContainer>
+    )
+}
+
+
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -57,15 +76,6 @@ const PageContainer = styled.div`
     margin-top: 30px;
     padding-bottom: 120px;
     padding-top: 70px;
-`
-const SeatsContainer = styled.div`
-    width: 330px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
 `
 const FormContainer = styled.div`
     width: calc(100vw - 40px); 
@@ -89,8 +99,8 @@ const CaptionContainer = styled.div`
     margin: 20px;
 `
 const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: 1px solid ${ (props) => props.border};
+    background-color: ${ (props) => props.color};
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -104,17 +114,4 @@ const CaptionItem = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 12px;
-`
-const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
 `
