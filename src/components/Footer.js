@@ -1,25 +1,25 @@
 import styled from "styled-components";
 
-export default function Footer(){
+export default function Footer({posterURL, title, weekday, showtime}){
+    console.log(weekday===true)
     return (
         <FooterContainer data-test="footer">
             <div>
-                <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                <img src={posterURL} alt={title} />
             </div>
             <div>
-                <p>Tudo em todo lugar ao mesmo tempo</p>
-                <p>Sexta - 14h00</p>
+                <p>{title}</p>
+                {(weekday) && <p>{weekday} - {showtime}</p> }
             </div>
         </FooterContainer>
     )
 }
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
     width: 100%;
     height: 120px;
-    background-color: #C3CFD9;
+    background-color: #DFE6ED;
     display: flex;
-    flex-direction: row;
     align-items: center;
     font-size: 20px;
     position: fixed;
@@ -44,6 +44,7 @@ const FooterContainer = styled.div`
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        margin-top: 0;
         p {
             text-align: left;
             &:nth-child(2) {

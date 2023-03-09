@@ -28,9 +28,7 @@ export default function SessionsPage() {
         <PageContainer>
             Selecione o horário
             <Sessions sessionsDays={sessions.days} />
-
-            <Footer />
-
+            <Footer posterURL={sessions.posterURL} title={sessions.title} />
         </PageContainer>
     )
 }
