@@ -7,26 +7,41 @@ import { SELECTED, SELECTED_BORDER, AVAILABLE, AVAILABLE_BORDER, UNAVAILABLE, UN
 import Seats from "./Seats";
 import Forms from "./Forms";
 
-export default function SeatsPage() {
+export default function SeatsPage({setTickets}) {
     const [session, setSession] = useState([]);
-    const [listSeats, setListSeats] = useState([])
+    const [seatsIds, setSeatsIds] = useState([]);
+    const [seatsName, setSeatsName] = useState([]);
     const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
     const { idSessao } = useParams();
     const navigate = useNavigate();
 
+    function updateTickets(){
+        const data = {
+            "movie": session.movie.title,
+            "weekday": session.day.date,
+            "showtime": session.name,
+            "seatsName": seatsName,
+            "buyer": {
+                name: name,
+                cpf: cpf,
+            }
+        }
+        setTickets(data);
+    }
+
     function reserveSeats(event){
         event.preventDefault();
 
+        updateTickets();
+
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
         const request = axios.post(url, {
-            ids: listSeats,
+            ids: seatsIds,
             name: name,
             cpf: cpf,
         });
-
         request.then( () => navigate("/sucesso") );
-
     }
 
     useEffect( ()=> {
@@ -44,7 +59,7 @@ export default function SeatsPage() {
     return (
         <PageContainer>
             Selecione o(s) assento(s)
-            <Seats seats={session.seats} listSeats={listSeats} setListSeats={setListSeats} />
+            <Seats seats={session.seats} seatsIds={seatsIds} setSeatsIds={setSeatsIds} seatsName={seatsName} setSeatsName={setSeatsName} />
 
             <Caption />
 

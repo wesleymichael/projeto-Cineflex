@@ -3,30 +3,33 @@ import styled from "styled-components"
 import { SELECTED, SELECTED_BORDER, AVAILABLE, AVAILABLE_BORDER, UNAVAILABLE, UNAVAILABLE_BORDER } from "../../constants/colors"
 
 
-export default function Seats({seats, listSeats, setListSeats}){
+export default function Seats({seats, seatsIds, setSeatsIds, seatsName, setSeatsName}){
     
 
     return(
         <SeatsContainer>
             {seats.map( (seat) => (
-                <Seat seat={seat} key={seat.id} listSeats={listSeats} setListSeats={setListSeats} />
+                <Seat seat={seat} key={seat.id} seatsIds={seatsIds} setSeatsIds={setSeatsIds} seatsName={seatsName} setSeatsName={setSeatsName} />
             ) )}
         </SeatsContainer>
     )
 }
 
-function Seat({seat, listSeats, setListSeats}){
+function Seat({seat, seatsIds, setSeatsIds, seatsName, setSeatsName}){
     const [selected, setSelected] = useState(false);
     
     function selectSeat(isAvailable){
         if(isAvailable){
             if(selected){
                 setSelected(false)
-                const newList = listSeats.filter( (id) => id !== seat.id )
-                setListSeats(newList);
+                const newList = seatsIds.filter( (id) => id !== seat.id )
+                setSeatsIds(newList);
+                const newseatsName = seatsName.filter( (name) => name !== seat.name )
+                setSeatsName(newseatsName)
             } else {
-                setSelected(true)
-                setListSeats([...listSeats, seat.id]);
+                setSelected(true);
+                setSeatsIds([...seatsIds, seat.id]);
+                setSeatsName([...seatsName, seat.name]);
             }
         } else {
             alert('Este assento não está disponível');
