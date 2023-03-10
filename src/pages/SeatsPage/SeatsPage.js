@@ -2,13 +2,32 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Footer from "../../components/Footer"
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SELECTED, SELECTED_BORDER, AVAILABLE, AVAILABLE_BORDER, UNAVAILABLE, UNAVAILABLE_BORDER } from "../../constants/colors"
 import Seats from "./Seats";
+import Forms from "./Forms";
 
 export default function SeatsPage() {
     const [session, setSession] = useState([]);
-    const { idSessao } = useParams()
+    const [listSeats, setListSeats] = useState([])
+    const [name, setName] = useState("");
+    const [cpf, setCpf] = useState("");
+    const { idSessao } = useParams();
+    const navigate = useNavigate();
+
+    function reserveSeats(event){
+        event.preventDefault();
+
+        const url = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
+        const request = axios.post(url, {
+            ids: listSeats,
+            name: name,
+            cpf: cpf,
+        });
+
+        request.then( () => navigate("/sucesso") );
+
+    }
 
     useEffect( ()=> {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`;
@@ -25,19 +44,17 @@ export default function SeatsPage() {
     return (
         <PageContainer>
             Selecione o(s) assento(s)
-            <Seats seats={session.seats} />
+            <Seats seats={session.seats} listSeats={listSeats} setListSeats={setListSeats} />
 
             <Caption />
 
-            <FormContainer>
-                Nome do Comprador:
-                <input placeholder="Digite seu nome..." data-test="client-name"/>
-
-                CPF do Comprador:
-                <input placeholder="Digite seu CPF..." data-test="client-cpf"/>
-
-                <button data-test="book-seat-btn">Reservar Assento(s)</button>
-            </FormContainer>
+            <Forms 
+                reserveSeats={reserveSeats}
+                name={name}
+                setName={setName}
+                cpf={cpf}
+                setCpf={setCpf}
+            />
 
             <Footer posterURL={session.movie.posterURL} title={session.movie.title} weekday={session.day.weekday} showtime={session.name} />
 
@@ -74,20 +91,6 @@ const PageContainer = styled.div`
     margin-top: 30px;
     padding-bottom: 120px;
     padding-top: 70px;
-`
-const FormContainer = styled.div`
-    width: calc(100vw - 40px); 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 20px 0;
-    font-size: 18px;
-    button {
-        align-self: center;
-    }
-    input {
-        width: calc(100vw - 60px);
-    }
 `
 const CaptionContainer = styled.div`
     display: flex;

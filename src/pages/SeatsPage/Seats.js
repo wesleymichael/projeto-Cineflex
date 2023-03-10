@@ -3,25 +3,30 @@ import styled from "styled-components"
 import { SELECTED, SELECTED_BORDER, AVAILABLE, AVAILABLE_BORDER, UNAVAILABLE, UNAVAILABLE_BORDER } from "../../constants/colors"
 
 
-export default function Seats({seats}){
+export default function Seats({seats, listSeats, setListSeats}){
+    
+
     return(
         <SeatsContainer>
             {seats.map( (seat) => (
-                <Seat seat={seat} key={seat.id} />
+                <Seat seat={seat} key={seat.id} listSeats={listSeats} setListSeats={setListSeats} />
             ) )}
         </SeatsContainer>
     )
 }
 
-function Seat({seat}){
+function Seat({seat, listSeats, setListSeats}){
     const [selected, setSelected] = useState(false);
     
     function selectSeat(isAvailable){
         if(isAvailable){
             if(selected){
                 setSelected(false)
+                const newList = listSeats.filter( (id) => id !== seat.id )
+                setListSeats(newList);
             } else {
                 setSelected(true)
+                setListSeats([...listSeats, seat.id]);
             }
         } else {
             alert('Este assento não está disponível');

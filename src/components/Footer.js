@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export default function Footer({posterURL, title, weekday, showtime}){
-    console.log(weekday===true)
     return (
         <FooterContainer data-test="footer">
             <div>
