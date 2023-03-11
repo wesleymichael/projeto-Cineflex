@@ -7,7 +7,7 @@ import { SELECTED, SELECTED_BORDER, AVAILABLE, AVAILABLE_BORDER, UNAVAILABLE, UN
 import Seats from "./Seats";
 import Forms from "./Forms";
 
-export default function SeatsPage({setTickets}) {
+export default function SeatsPage() {
     const [session, setSession] = useState([]);
     const [seatsIds, setSeatsIds] = useState([]);
     const [seatsName, setSeatsName] = useState([]);
@@ -27,7 +27,7 @@ export default function SeatsPage({setTickets}) {
                 cpf: cpf,
             }
         }
-        setTickets(data);
+        localStorage.setItem('data', JSON.stringify(data));
     }
 
     function reserveSeats(event){
@@ -60,9 +60,7 @@ export default function SeatsPage({setTickets}) {
         <PageContainer>
             Selecione o(s) assento(s)
             <Seats seats={session.seats} seatsIds={seatsIds} setSeatsIds={setSeatsIds} seatsName={seatsName} setSeatsName={setSeatsName} />
-
             <Caption />
-
             <Forms 
                 reserveSeats={reserveSeats}
                 name={name}
@@ -70,9 +68,7 @@ export default function SeatsPage({setTickets}) {
                 cpf={cpf}
                 setCpf={setCpf}
             />
-
             <Footer posterURL={session.movie.posterURL} title={session.movie.title} weekday={session.day.weekday} showtime={session.name} />
-
         </PageContainer>
     )
 }

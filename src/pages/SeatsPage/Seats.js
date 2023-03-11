@@ -2,10 +2,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import { SELECTED, SELECTED_BORDER, AVAILABLE, AVAILABLE_BORDER, UNAVAILABLE, UNAVAILABLE_BORDER } from "../../constants/colors"
 
-
 export default function Seats({seats, seatsIds, setSeatsIds, seatsName, setSeatsName}){
-    
-
     return(
         <SeatsContainer>
             {seats.map( (seat) => (
@@ -24,12 +21,12 @@ function Seat({seat, seatsIds, setSeatsIds, seatsName, setSeatsName}){
                 setSelected(false)
                 const newList = seatsIds.filter( (id) => id !== seat.id )
                 setSeatsIds(newList);
-                const newseatsName = seatsName.filter( (name) => name !== seat.name )
+                const newseatsName = seatsName.filter( (name) => name !== seat.name).sort((a, b) => a - b);
                 setSeatsName(newseatsName)
             } else {
                 setSelected(true);
                 setSeatsIds([...seatsIds, seat.id]);
-                setSeatsName([...seatsName, seat.name]);
+                setSeatsName([...seatsName, seat.name].sort((a, b) => a - b));
             }
         } else {
             alert('Este assento não está disponível');
@@ -41,7 +38,6 @@ function Seat({seat, seatsIds, setSeatsIds, seatsName, setSeatsName}){
         </SeatItem>
     )
 }
-
 
 const SeatsContainer = styled.div`
     width: 330px;
@@ -63,8 +59,7 @@ const SeatItem = styled.div`
                 return UNAVAILABLE_BORDER;
             }
         }        
-    }};  // Essa cor deve mudar
-    
+    }};
     background-color: ${ (props) => { 
         if(props.selected){
             return SELECTED;
@@ -75,8 +70,7 @@ const SeatItem = styled.div`
                 return UNAVAILABLE;
             }
         }        
-    }};  // Essa cor deve mudar
-
+    }};
     color: #000000;
     height: 25px;
     width: 25px;

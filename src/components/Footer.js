@@ -11,7 +11,7 @@ export default function Footer({posterURL, title, weekday, showtime}){
                 {(weekday) && <p>{weekday} - {showtime}</p> }
             </div>
         </FooterContainer>
-    )
+    );
 }
 
 const FooterContainer = styled.footer`
@@ -51,4 +51,4 @@ const FooterContainer = styled.footer`
             }
         }
     }
-`
+`;

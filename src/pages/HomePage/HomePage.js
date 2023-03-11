@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import styled from "styled-components"
-import axios from "axios"
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
@@ -12,9 +12,8 @@ export default function HomePage() {
 
         promise.then( (sucess) => setMovies(sucess.data) )
         promise.catch( (err) => {
-            console.log(err.response.data);
-        } )
-
+            alert(err.response.data);
+        } );
     }, [])
 
     if( movies.length === 0){
@@ -47,14 +46,14 @@ const PageContainer = styled.div`
     color: #293845;
     margin-top: 30px;
     padding-top: 70px;
-`
+`;
 const ListContainer = styled.div`
     width: 330px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     padding: 10px;
-`
+`;
 const MovieContainer = styled.div`
     width: 145px;
     height: 210px;
@@ -68,4 +67,4 @@ const MovieContainer = styled.div`
         width: 130px;
         height: 190px;
     }
-`
+`;

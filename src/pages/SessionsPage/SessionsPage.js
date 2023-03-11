@@ -1,13 +1,13 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import styled from "styled-components"
-import Footer from "../../components/Footer"
-import Sessions from "./Sessions"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import Footer from "../../components/Footer";
+import Sessions from "./Sessions";
 
 export default function SessionsPage() {
-    const [sessions, setSessions] = useState([])
-    const { idFilme } = useParams()
+    const [sessions, setSessions] = useState([]);
+    const { idFilme } = useParams();
 
     useEffect( () => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`;
@@ -15,14 +15,13 @@ export default function SessionsPage() {
 
         promise.then( (sucess) => setSessions(sucess.data) );
         promise.catch( (err) => console.log(err.response.data) );
-    }, [])
-
+    }, []);
 
     if(sessions.length === 0){
         return(
             <PageContainer>Loading...</PageContainer>
         )
-    }
+    };
 
     return (
         <PageContainer>
@@ -30,9 +29,8 @@ export default function SessionsPage() {
             <Sessions sessionsDays={sessions.days} />
             <Footer posterURL={sessions.posterURL} title={sessions.title} />
         </PageContainer>
-    )
+    );
 }
-
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -46,4 +44,4 @@ const PageContainer = styled.div`
     div {
         margin-top: 20px;
     }
-`
+`;

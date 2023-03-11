@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SuccessPage({tickets, setTickets}) {
+export default function SuccessPage() {
     const navigate = useNavigate();
+    const tickets = JSON.parse(localStorage.getItem('data'));
 
     function comeBack(){
-        setTickets([]);
+        localStorage.removeItem('data');
         navigate("/");
     }
     return (

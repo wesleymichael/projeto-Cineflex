@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import {ORANGE, GRAY } from "../constants/colors"
+import styled from "styled-components";
+import {ORANGE, GRAY } from "../constants/colors";
 
 export default function Header(){
     return (
@@ -19,4 +19,4 @@ const NavContainer = styled.div`
     font-size: 34px;
     position: fixed;
     top: 0;
-`
+`;
